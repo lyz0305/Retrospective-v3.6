@@ -1,4 +1,4 @@
-function x = CSL1NlCg(x0,param)
+function x = CSL1NlCg(app,n,nouter,x0,param)
 % 
 % res = CSL1NlCg(param)
 %
@@ -17,8 +17,8 @@ function x = CSL1NlCg(x0,param)
 % Ricardo Otazo 2008
 %
 
-fprintf('\n Non-linear conjugate gradient algorithm')
-fprintf('\n ---------------------------------------\n')
+%fprintf('\n Non-linear conjugate gradient algorithm')
+%fprintf('\n ---------------------------------------\n')
 
 % starting point
 x=x0;
@@ -39,6 +39,10 @@ dx = -g0;
 % iterations
 while(1)
 
+    progress = round(100*((n-1)*param.nite + k)/(param.nite*nouter));
+    app.ProgressGauge.Value = progress;
+    drawnow;
+    
     % backtracking line-search
 	f0 = objective(x,dx,0,param);
 	t = t0;
@@ -63,9 +67,9 @@ while(1)
 	x = (x + t*dx);
 
 	% print some numbers	
-    if param.display,
-        fprintf(' ite = %d, cost = %f \n',k,f1);
-    end
+    %if param.display
+        %fprintf(' ite = %d, cost = %f \n',k,f1);
+    %end
 
     %conjugate gradient calculation
 	g1 = grad(x,param);
@@ -78,6 +82,8 @@ while(1)
 	if (k > param.nite) || (norm(dx(:)) < gradToll), break;end
 
 end
+
+
 return;
 
 function res = objective(x,dx,t,param) %**********************************

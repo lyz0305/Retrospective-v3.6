@@ -1,4 +1,4 @@
-function image_out = cs_reco_mat(kdata,mask,lambda_Wavelet,lambda_TV)
+function image_out = cs_reco_mat(app,kdata,mask,lambda_Wavelet,lambda_TV)
 
 % kspace data, x, y, t
 kdata = permute(kdata,[3,2,1]);
@@ -46,6 +46,7 @@ param.TVWeight = lambda_TV/8;
 
 % number of iterations
 param.nite = 5;
+nouter = 3;
 
 % display on or off
 param.display = 1;
@@ -55,12 +56,12 @@ recon_dft = param.E'*kdata;
 
 % iterative reconstruction
 % reconstruction is restarted 3 times
-tic
+
 recon_cs=recon_dft;
-for n=1:4
-	recon_cs = CSL1NlCg(recon_cs,param);
+for n=1:nouter
+	recon_cs = CSL1NlCg(app,n,nouter,recon_cs,param);
 end
-toc
+
 
 % rearrange to correct orientation
 image_out = flip(abs(permute(squeeze(recon_cs),[3, 2, 1])),3);
