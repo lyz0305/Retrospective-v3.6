@@ -12,9 +12,9 @@ scale = (1/intensity_scale_slider)*255/max(movie(:));
 
 for idx = 1:number_of_frames
     if idx == 1
-        imwrite(uint8(scale*squeeze(movie(:,:,idx))),[gifexportpath,'/movie-',tag,'-',num2str(number_of_frames),'frames.gif'],'DelayTime',delay_time,'LoopCount',inf);
+        imwrite(uint8(scale*squeeze(movie(:,:,idx))),[gifexportpath,filesep,'movie-',tag,'-',num2str(number_of_frames),'frames.gif'],'DelayTime',delay_time,'LoopCount',inf);
     else
-        imwrite(uint8(scale*squeeze(movie(:,:,idx))),[gifexportpath,'/movie-',tag,'-',num2str(number_of_frames),'frames.gif'],'WriteMode','append','DelayTime',delay_time);
+        imwrite(uint8(scale*squeeze(movie(:,:,idx))),[gifexportpath,filesep,'movie-',tag,'-',num2str(number_of_frames),'frames.gif'],'WriteMode','append','DelayTime',delay_time);
     end
 end
             
