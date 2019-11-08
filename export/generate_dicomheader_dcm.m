@@ -4,6 +4,8 @@ function dicom_header = generate_dicomheader_dcm(dcmhead,parameters,frame,nr_fra
 % GENERATES DICOM HEADER FOR EXPORT
 %
 % parameters = parameters from MRD file
+% dcmhead = dicom info from scanner generated dicom
+%
 % frame = current frame number
 % nr_frames = total number of frames
 % dimy = y dimension (phase encoding, views)
